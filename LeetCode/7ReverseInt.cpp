@@ -11,13 +11,13 @@ public:
       isNeg = true;
       x = -x;
     }
-    int iRes = 0;
+    int iRes = 0, iResPre = 0;
     while(x>0){
-      iRes += iRes*10+(x%10);
-      if(iRes<0) return 0;
+      iRes = iResPre*10+(x%10);
+      if(iRes/10!=iResPre) return 0;
+      iResPre = iRes;
       x /= 10;
     }
-    if(iRes<0) return 0;
     if(isNeg) iRes = -iRes;
     return iRes;
   }
