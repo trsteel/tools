@@ -4,7 +4,7 @@ public:
         if(A.size()!=B.size()) return false;
         if(A==B) {
             unordered_map<char,int> counts;
-            for(char c: A) if(counts[c]++>1) return true;
+            for(char c: A) if(++counts[c]>1) return true;
             return false;
         }
         char last_a=' ', last_b = ' ';
