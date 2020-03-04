@@ -26,8 +26,7 @@ Mat MatPower(Mat M, long long y){
 int main(){
     long long t, n, m; cin>>t;
     while(t--) {
-        cin>>n>>m;
-        m %= mod;
+        cin>>n>>m; m %= mod;
         Mat temp=MatPower(Mat(m-1,m-1,1,0),n-1);
         cout<<((m*(temp.a+temp.c))%mod)<<endl;
     }
