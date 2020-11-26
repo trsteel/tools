@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string.h>
+#include <algorithm>
 using namespace std;
 
 const long maxn = 200001;
@@ -42,25 +43,35 @@ int main(){
     cin>>t;
     while(t--) {
         cin>>n;
-        for(long i=1;i<=n;i++) cin>>a[i];
+        vector<long> ma(n+1, 0);
+        for(long i=1;i<=n;i++) {
+            cin>>a[i]; ma[i] = max(ma[i-1], a[i]);
+        }
         memset(seg, 0, sizeof(seg));
         build(1, 1, n);
-        long i = 1, j = n, mal = a[1], mar = a[n];
+        long ans = a[n];
         bool find = false;
-        while(i<j) {
-            if(mal < mar) {mal = max(mal, a[++i]); continue;}
-            if(mal > mar) {mar = max(mar, a[--j]); continue;}
-            long ans = query(1, i+1, j-1);
-            cout<<i<<" "<<j<<" "<<ans<<endl;
-            if(ans==mal) {
-                find = true; break;
+        for(long i=n; i>2;i--) {
+            ans = max(ans, a[i]);
+            long l = lower_bound(ma.begin()+1, ma.end(), ans) - ma.begin();
+            if (l >= i-1) continue;
+            long r = upper_bound(ma.begin()+1, ma.end(), ans) - ma.begin() - 1;
+            r = min(r, i-1);
+//            cout<<ans<<" "<<l<<" "<<r<<endl;
+            while(l<=r) {
+                long mid = (l+r)>>1;
+                long cur = query(1, mid+1, i-1);
+//                cout<<ans<<" "<<(mid+1)<<" "<<(i-1)<<" "<<cur<<endl;
+                if(cur == ans) {
+                    cout<<"YES"<<endl;
+                    cout<<mid<<" "<<(i-mid-1)<<" "<<(n-i+1)<<endl;
+                    find = true; break;
+                } else if(cur < ans) l = mid + 1;
+                else r = mid - 1;
             }
-            mal = max(mal, a[++i]);
-            mar = max(mar, a[--j]);
+            if(find) break;
         }
-        if(find) {
-            cout<<"YES"<<endl<<i<<(j-i)<<(n-j-1)<<endl;
-        } else cout<<"NO"<<endl;
+        if(!find) cout<<"NO"<<endl;
     }
     return 0;
 }
