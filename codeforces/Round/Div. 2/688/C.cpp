@@ -17,8 +17,8 @@ void process() {
     }
     for(long i=0;i<n;i++) for(long j=0;j<n;j++) {
         int u=grid[i][j]-'0';
-        ans[u]=max(ans[u],1ll*max(j-1,n-j)*max(i-l[u].front(),l[u].back()-i));
-        ans[u]=max(ans[u],1ll*max(i-1,n-i)*max(j-r[u].front(),r[u].back()-j));
+        ans[u]=max(ans[u],1ll*max(j,n-1-j)*max(i-l[u].front(),l[u].back()-i));
+        ans[u]=max(ans[u],1ll*max(i,n-1-i)*max(j-r[u].front(),r[u].back()-j));
     }
     for(int i=0;i<10;++i) cout<<ans[i]<<" ";
     cout<<endl;
