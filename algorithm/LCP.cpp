@@ -13,7 +13,7 @@ vector<int> LCP(string& s) {
             if(s[i]==s[j]) { i++; j++; continue; }
             return s[i]<s[j];
         }
-        return i==s.size() ? true : false;
+        return i==s.size();
     });
     // LCP
     vector<int> rank(n,0);
