@@ -16,12 +16,8 @@ int main(){
             }
         }
         long long res = 0;
-        for(int i=0;i<n;i++) for(int j=i+2;j<n;j++) {
-            if(a[i] != a[j]) continue;
-            for(int k=1;k<=n;k++) {
-                res += (dp[j][k]-dp[i+1][k])*(dp[n][k]-dp[j+1][k]);
-            }
-            // cout<<i<<" "<<j<<" "<<res<<endl;
+        for(int i=0;i<n;i++) for(int j=i+1;j<n;j++) {
+            res += dp[i][a[j]]*(dp[n][a[i]]-dp[j+1][a[i]]);
         }
         cout<<res<<endl;
     }
